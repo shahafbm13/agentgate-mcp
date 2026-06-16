@@ -5,10 +5,10 @@ Agentic identity extends traditional IAM to AI agents acting on behalf of users.
 ## Key Concepts
 
 - **Resource Server**: MCP server validating tokens (AgentGate).
-- **Authorization Server**: Issues scoped tokens (mock auth server in demo; Descope Agentic Identity Hub in production).
+- **Authorization Server**: Issues scoped tokens (mock auth server in demo; production OAuth 2.1 / OIDC provider in real deployments).
 - **Tool-level scopes**: Fine-grained permissions per MCP tool.
 - **Connections**: Secure storage for downstream API credentials (notification API key pattern in demo).
 
-## Descope Alignment
+## Production Considerations
 
-Descope's Agentic Identity Hub provides OAuth 2.1, DCR/CIMD, consent flows, and policy enforcement that this portfolio project implements in simplified form for learning purposes.
+A production deployment would add full OAuth 2.1 (PKCE, DCR/CIMD, consent flows) and centralized policy enforcement. This portfolio project implements a simplified subset for learning purposes.

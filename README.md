@@ -213,7 +213,7 @@ examples/          MCP client config templates
 
 ## Possible next steps
 
-- Wire up [Descope Agentic Identity Hub](https://docs.descope.com/agentic-identity-hub) instead of mock auth
+- Wire up a production OAuth 2.1 / OIDC provider instead of mock auth
 - Vector search over docs
 - Deploy Streamable HTTP (Render / ECS)
 
