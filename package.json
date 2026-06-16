@@ -1,0 +1,60 @@
+{
+  "name": "agentgate-mcp",
+  "version": "1.0.0",
+  "description": "Identity-aware MCP resource server for internal developer access management",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "dev:http": "cross-env TRANSPORT=http tsx watch src/index.ts",
+    "local": "tsx scripts/dev-local.ts",
+    "local:setup": "tsx scripts/setup-local.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "lint": "eslint src tests mock-auth-server notification-api scripts --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e",
+    "test:all": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:local": "tsx scripts/postgres-dev.ts",
+    "mock-auth:dev": "tsx mock-auth-server/index.ts",
+    "notification-api:dev": "tsx notification-api/index.ts",
+    "demo": "tsx scripts/demo-client.ts",
+    "verify:local": "tsx scripts/verify-local.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "dotenv": "^16.6.1",
+    "drizzle-orm": "^0.44.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "jose": "^6.0.11",
+    "pg": "^8.16.0",
+    "pino": "^9.7.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.30",
+    "@types/pg": "^8.15.4",
+    "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.34.0",
+    "@typescript-eslint/parser": "^8.34.0",
+    "cross-env": "^7.0.3",
+    "drizzle-kit": "^0.31.1",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "eslint": "^9.28.0",
+    "supertest": "^7.1.1",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
