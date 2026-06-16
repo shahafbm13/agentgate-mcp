@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "agentgate": {
+      "command": "npx",
+      "args": ["tsx", "src/index.ts"],
+      "env": {
+        "TRANSPORT": "stdio",
+        "DATABASE_URL": "postgresql://agentgate:agentgate@127.0.0.1:5432/agentgate",
+        "AGENTGATE_ACCESS_TOKEN": "paste-token-from-mock-auth-here",
+        "JWKS_URI": "http://127.0.0.1:9000/.well-known/jwks.json",
+        "JWT_ISSUER": "http://127.0.0.1:9000",
+        "JWT_AUDIENCE": "http://127.0.0.1:3000/mcp",
+        "NOTIFICATION_API_URL": "http://127.0.0.1:9001",
+        "NOTIFICATION_API_KEY": "dev-notification-key"
+      }
+    }
+  }
+}

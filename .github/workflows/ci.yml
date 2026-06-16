@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: agentgate
+          POSTGRES_PASSWORD: agentgate
+          POSTGRES_DB: agentgate
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U agentgate -d agentgate"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://agentgate:agentgate@localhost:5432/agentgate
+      JWT_ISSUER: http://localhost:9000
+      JWT_AUDIENCE: http://localhost:3000/mcp
+      JWKS_URI: http://localhost:9000/.well-known/jwks.json
+      AUTH_SERVER_URL: http://localhost:9000
+      MCP_RESOURCE_URI: http://localhost:3000/mcp
+      BASE_URL: http://localhost:3000
+      NOTIFICATION_API_URL: http://localhost:9001
+      NOTIFICATION_API_KEY: test-key
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+
+      - name: Start mock auth server
+        run: npm run mock-auth:dev &
+
+      - name: Start notification API
+        run: NOTIFICATION_API_KEY=test-key npm run notification-api:dev &
+
+      - name: Wait for services
+        run: sleep 5
+
+      - name: Run migrations and seed
+        run: |
+          npm run db:migrate
+          npm run db:seed
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Run integration tests
+        run: npm run test:integration
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+
+      - name: Docker build
+        run: docker build -t agentgate-mcp .
