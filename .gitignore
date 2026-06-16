@@ -8,3 +8,4 @@ coverage/
 keys/
 *.pem
 data/
+.cursor/mcp.json

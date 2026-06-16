@@ -27,7 +27,9 @@
     "mock-auth:dev": "tsx mock-auth-server/index.ts",
     "notification-api:dev": "tsx notification-api/index.ts",
     "demo": "tsx scripts/demo-client.ts",
-    "verify:local": "tsx scripts/verify-local.ts"
+    "verify:local": "tsx scripts/verify-local.ts",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",

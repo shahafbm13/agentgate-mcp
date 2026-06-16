@@ -47,14 +47,14 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
-    command: npm run dev:http
+    command: sh -c "npm run db:migrate && npm run db:seed && exec npm run dev:http"
     environment:
       DATABASE_URL: postgresql://agentgate:agentgate@postgres:5432/agentgate
       PORT: 3000
       TRANSPORT: http
       MCP_RESOURCE_URI: http://localhost:3000/mcp
       BASE_URL: http://localhost:3000
-      JWT_ISSUER: http://mock-auth:9000
+      JWT_ISSUER: http://localhost:9000
       JWT_AUDIENCE: http://localhost:3000/mcp
       JWKS_URI: http://mock-auth:9000/.well-known/jwks.json
       AUTH_SERVER_URL: http://localhost:9000

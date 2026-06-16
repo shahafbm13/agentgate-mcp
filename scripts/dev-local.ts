@@ -128,6 +128,9 @@ async function main() {
 
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
+
+  // Keep parent alive until Ctrl+C (Windows shell-spawned children may not hold the event loop).
+  await new Promise<void>(() => {});
 }
 
 main().catch((err) => {
